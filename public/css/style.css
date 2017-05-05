@@ -1,0 +1,68 @@
+body{
+    font-family: 'Coda';
+}
+
+h1 {
+    text-align: center;
+}
+
+#title{
+    font-family: 'Audiowide';
+}
+
+.center {
+    text-align: center;
+}
+
+.table > tbody > tr > td{
+	vertical-align: middle;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.game-link{
+    cursor: pointer;
+}
+
+a#search_igdb {
+    cursor: pointer;
+}
+
+#developer_carousel > .carousel-control.left, .carousel-control.right{
+    background: none !important; 
+    color: black;
+}
+
+div.games img {
+    width: 90px;
+}
+
+img#logo {
+    width: 90px;
+}
+
+div.row {
+    margin: 2px;
+}
+
+div.company img {
+    width: 200px;
+}
+
+div.game {
+    position:relative;
+    padding:10px;
+    overflow:hidden;
+}
+
+div.game p {
+    margin: 0px;
+    padding: 0px;
+}
+
+[class*="col-"] {
+    margin-bottom: 20px;
+}

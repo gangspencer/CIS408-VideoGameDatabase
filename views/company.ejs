@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<!--=========================================
+* Ultimate Video Game Database
+* Final Project for CIS 408
+* Developed by Spencer Gang & John Liggett
+=============================================-->
+
+<html lang="en">
+
+<head>
+    <title><%= company.name %> | Ultimate Video Game Database</title>
+    <% include ../partials/head.ejs %>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/game.css"/>
+    <script src="../js/game.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1 id="title">Ultimate Video Game Database</h1>
+        <br/>
+        <div class="center">
+            <form class="form-inline" action="../search" method="POST">
+                <input type="text" class="form-control" name="term" placeholder="Enter search term">
+                <button type="submit" class="btn btn-primary form-control">Submit</button>
+            </form>
+        </div>
+        <br/>
+        <div class="company">
+            <% var logo_url = "https:" %>
+            <% if (company.logo == null) { logo_url += "//images.igdb.com/igdb/image/upload/nocover_qhhlj6.jpg" } %>
+            <% if (company.logo != null) { logo_url += "//images.igdb.com/igdb/image/upload/" + company.logo.cloudinary_id + ".png" } %>
+            <img src="<%= logo_url %>" id="logo" alt="Company Logo"/>
+            <h2><%= company.name %></h2>
+            <% var description = ""; if(company.description == null) description = "No description for this company"; %>
+            <%if (company.description != null) description = company.description; %>
+            <p><%= description %></p>
+            <% if (company.website != null) { %>
+                <p>Website: <a href="<%= company.website %>"><%= company.website %></a></p>
+            <% } %>
+            <% if (company.twitter != null) { %>
+                <p>Twitter: <a href="<%= company.twitter %>"><%= company.twitter %></a></p>
+            <% } %>
+            <% if (igdb_published != null) { %>
+                <h3>Published:</h3>
+                <!-- Display games published -->
+                <div class="row">
+                <% igdb_published.forEach(function(game) { %>
+                    <div class="game col-sm-3">
+                        <a href="../game/<%= game.slug %>">
+                        <% var url = "https:"; if (game.cover == null) url += "//images.igdb.com/igdb/image/upload/t_thumb/nocover_qhhlj6.jpg"; %>
+                        <% if (game.imgur_cover != null) { url = game.imgur_cover } %>
+                        <% if (game.cover != null) url += game.cover.url; %>
+                        <img src="<%= url %>"/>
+                        <br/>
+                        <p><%= game.name %></p>
+                        </a>
+                    </div>
+                <% }) %>
+                </div>
+            <% } %>
+            <% if (igdb_developed != null) { %>
+                <h3>Developed:</h3>
+                <!-- Display games developed -->
+                <div class="row">
+                <% igdb_developed.forEach(function(game) { %>
+                    <div class="game col-sm-3">
+                        <a href="../game/<%= game.slug %>">
+                        <% var url = "https:"; if (game.cover == null) url += "//images.igdb.com/igdb/image/upload/t_thumb/nocover_qhhlj6.jpg"; %>
+                        <% if (game.imgur_cover != null) { url = game.imgur_cover } %>
+                        <% if (game.cover != null) url += game.cover.url; %>
+                        <img src="<%= url %>"/>
+                        <br/>
+                        <p><%= game.name %></p>
+                        </a>
+                    </div>
+                <% }) %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+</body>
+
+</html>
+

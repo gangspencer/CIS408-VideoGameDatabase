@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<!--=========================================
+* Ultimate Video Game Database
+* Final Project for CIS 408
+* Developed by Spencer Gang & John Liggett
+=============================================-->
+
+<html lang="en">
+
+<head>
+    <title>Ultimate Video Game Database</title>
+    <% include ../partials/head.ejs %>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1 id="title">Ultimate Video Game Database</h1>
+        <br/>
+        <div class="center">
+            <form class="form-inline" action="search" method="POST">
+                <input type="text" class="form-control" name="term" placeholder="Enter search term">
+                <button type="submit" class="btn btn-primary form-control">Submit</button>
+            </form>
+        </div>
+        <br/>
+        <div id="search-response" class="game">
+            <p>We couldn't find "<%= game.slug %>".  Try to search for the game, <a href="../">here</a>.
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+

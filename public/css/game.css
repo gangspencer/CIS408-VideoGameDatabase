@@ -1,0 +1,57 @@
+#cover {
+    width: 200px;
+    margin: 1px 15px 2px 5px;
+    float: left;
+    box-shadow: 1px 1px 10px black;
+}
+.slideshow {
+    position: relative;
+}
+.slide {
+    border: 1px solid black;
+    display: none;
+}
+.active-slide {
+    display: block;
+}
+.previous, .next {
+    text-decoration: none;
+    position: absolute;
+    top: 42%;
+    padding: 16px;
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+}
+.next {
+    right: 0;
+}
+.previous:hover, .next:hover {
+    text-decoration: none;
+    background-color: #222;
+    color: #F00;
+}
+.text-center{
+    text-align: center;
+}
+.table-center{
+    margin: auto;
+}
+.col-centered{
+    float: none;
+    margin: 0 auto;
+    padding: 2em;
+}
+#youtube-vids{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}

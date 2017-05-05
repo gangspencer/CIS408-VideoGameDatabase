@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<!--=========================================
+* Ultimate Video Game Database
+* Final Project for CIS 408
+* Developed by Spencer Gang & John Liggett
+=============================================-->
+
+<html lang="en">
+
+<head>
+    <title><%= game.name %> | Ultimate Video Game Database</title>
+    <% include ../partials/head.ejs %>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/game.css"/>
+    <script src="../js/game.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1 id="title">Ultimate Video Game Database</h1>
+        <br/>
+        <div class="center">
+            <form class="form-inline" action="../search" method="POST">
+                <input type="text" class="form-control" name="term" placeholder="Enter search term">
+                <button type="submit" class="btn btn-primary form-control">Submit</button>
+            </form>
+        </div>
+        <br/>
+        <div id="search-response" class="game">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h2><%= game.name %></h2>
+                    </div>
+                </div>
+                <br> 
+                <div class="row">
+                    <div class="col-md-3">
+                        <% var cover_url = "https:" %>
+                        <% if (game.cover == null) { cover_url += "//images.igdb.com/igdb/image/upload/nocover_qhhlj6.jpg" } %>
+                        <% if (game.cover != null) { cover_url += "//images.igdb.com/igdb/image/upload/" + game.cover.cloudinary_id + ".png" } %>
+                        <% if (game.imgur_cover != null) { cover_url = game.imgur_cover } %>
+                        <img src="<%= cover_url %>" id="cover" alt="Game Cover"/>
+                    </div>
+                    <div class="col-md-9 col-centered">
+                        <% var description = ""; if(game.summary == null) description = "No description for this title"; %>
+                        <%if (game.summary != null) description = game.summary; %>
+                        <p><%= description %></p>
+                    </div>
+                </div>
+                <div clas="row">
+                    <div class="col-md-12 text-center">
+                        <h3>About:</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <br><br>
+                        <div class="container">
+                            <table class="table">
+                                <tbody class="text-center table-center">
+                                    <% if(game.igdb_rating != null) { %>
+                                        <% var rating = "" %>
+                                        <% if(game.igdb_rating == null){ rating = "No rating for this game"; } %>
+                                        <% if(game.igdb_rating != null){ rating = game.igdb_rating; %>
+                                            <% var formatted_rating = rating.toFixed(2); %>
+                                            <% formatted_rating += "/100"; %>
+                                            <tr><td>Rating: <%= formatted_rating %></td></tr>
+                                        <% } %>                                    
+                                    <% } %>
+                                    <% if(game.alternative_names != null) { %>
+                                        <% if (game.alternative_names != null) { %>
+                                            <% var alternate_names = ""; %>
+                                            <% for(var i = 0; i < game.alternative_names.length; i++) { %>
+                                                
+                                                <% if(i == game.alternative_names.length - 1) { %>
+                                                    <% alternate_names += game.alternative_names[i].name; %>
+                                                <% } else { %>
+                                                    <% alternate_names += game.alternative_names[i].name + ", " %>
+                                                <% } %>
+                                                    <tr><td>Alternate names: <%= alternate_names %></td></tr>
+                                            <% } %>
+                                        <% } %>
+                                    <% } %>
+                                    <% if(igdb_genres != null) { %>
+                                        <% if (igdb_genres != null) { %>
+                                            <% var genres = "Genres: " %>
+                                            <% for (var i = 0; i < igdb_genres.length; i++) { %>
+                                                <% genres += igdb_genres[i].name %><% if (i < igdb_genres.length - 1) { genres += ", "; } %>
+                                            <% } %>
+                                            <tr><td><%= genres %></td></tr>
+                                        <% } %>
+                                    <% } %>
+                                    <% if (igdb_themes != null) { %>
+                                        <% var themes = "Themes: "; %>
+                                        <% for (var i = 0; i < igdb_themes.length; i++) { %>
+                                            <% themes += igdb_themes[i].name; if(i < igdb_themes.length - 1) { themes += ", "; } %>
+                                        <% } %>
+                                        <tr><td><%= themes %></td></tr>
+                                    <% } %> 
+                                    <% if (igdb_game_modes != null) { %>
+                                        <% var game_modes = "Game Modes: "; %>
+                                        <% for (var i = 0; i < igdb_game_modes.length; i++) { %>
+                                            <% game_modes += igdb_game_modes[i].name; if(i < igdb_game_modes.length - 1) { game_modes += ", "; } %>
+                                        <% } %>
+                                        <tr><td><%= game_modes %></td></tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                    </div>
+            </div>
+
+            <% if (game.screenshots != null) { %>
+                <h3 class="text-center">Screenshots:</h3>
+                <div class="container">
+                <div class="slideshow embed-responsive embed-responsive-16by9">
+                    <% var url = "" %>
+                    <% if (game.screenshots[0].imgur != null) { %>
+                        <% url = game.screenshots[0].imgur %>
+                    <% } else { %>
+                        <% url = "https://images.igdb.com/igdb/image/upload/" + game.screenshots[0].cloudinary_id + ".png" %>
+                    <% } %>
+                    <div class="slide active-slide">
+                        <img class="img-responsive" src="<%= url %>" alt="Screenshot <%= i %>"/>
+                    </div>
+                    <% if (game.screenshots.length != 1) { %>
+                        <% for (var i = 1; i < game.screenshots.length; i++) { %>
+                            <% var url = "" %>
+                            <% if (game.screenshots[i].imgur != null) { %>
+                                <% url = game.screenshots[i].imgur %>
+                            <% } else { %>
+                                <% url = "https://images.igdb.com/igdb/image/upload/" + game.screenshots[i].cloudinary_id + ".png" %>
+                            <% } %>
+                            <div class="slide">
+                                <img class="img-responsive" src="<%= url %>" alt="Screenshot <%= i %>"/>
+                            </div>
+                        <% } %>
+                        <a class="previous" onclick="previousSlide()">❮</a>
+                        <a class="next" onclick="nextSlide()">❯</a>
+                    <% } %>
+                </div>
+                </div>
+            <% } %>
+
+            <% if(game.videos != null) { %>
+            <br>
+            <h3 class="text-center">Videos:</h3>
+            <div id="youtube-vids">
+                <% if(game.videos != null) { %>
+                    
+                    <% console.log("\n\n\n"); %>
+                    <% console.log(game.videos); %>
+                    <% console.log("\n\n\n"); %>
+                    <% var link = "https://www.youtube.com/embed/"; %>
+                    <% link += game.videos[0].video_id; console.log(link); %>
+                    <iframe width="1100" height="600" src="<%= link %>"></iframe>
+                <% } %>
+            </div>
+            <% } %>
+
+            <% if(igdb_developers != null) { %>
+                <div class="container">
+                    <h3 class="center">Developers</h3>
+
+                    <div id="developer_carousel" class="carousel" data-ride="carousel">  
+                        
+                        <div class="carousel-indicators">
+                            <!--<% for(var i = 0; i < igdb_developers.length; i++) { %>
+                                <% if (i == 0){ %> <li data-target="#developer_carousel" data-slide-to="<%= i %>" class="active"></li>
+                                <% } else {%><li data-target="#developer_carousel" data-slide-to"<%= i %>"></li> <% } %>
+                            <% } %>-->
+                        </div>
+
+                        <div class="carousel-inner text-center">
+                            <% for(var i = 0; i < igdb_developers.length; i++){ %>
+                                <% if(i == 0) { %>
+                                    <div class="item active">
+                                        <p>
+                                        <a href="../company/<%= igdb_developers[i].slug %>"><%= igdb_developers[i].name %></a>
+                                        </p>
+                                        <p>
+                                        <a href="<%= igdb_developers[i].website %>" target="_blank"><%= igdb_developers[i].website %></a>
+                                        </p>
+                                    </div>
+                                <% } else { %>
+                                    <div class="item">
+                                        <p>
+                                        <a href="../company/<%= igdb_developers[i].slug %>"><%= igdb_developers[i].name %></a>
+                                        </p>
+                                        <p>
+                                        <a href="<%= igdb_developers[i].website %>"  target="_blank"><%= igdb_developers[i].website %></a>
+                                        </p>
+                                    </div>
+                                <% } %>
+                            <% } %>
+                        </div>
+                        <% if(igdb_developers.length > 1) { %>
+                            <a class="left carousel-control" href="#developer_carousel" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#developer_carousel" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
+
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+</body>
+
+</html>
+

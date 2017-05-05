@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<!--=========================================
+* Ultimate Video Game Database
+* Final Project for CIS 408
+* Developed by Spencer Gang & John Liggett
+=============================================-->
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Ultimate Video Game Database</title>
+    <meta name="robots" content="noindex">
+    <link href="https://fonts.googleapis.com/css?family=Audiowide|Coda" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1 id="title">Ultimate Video Game Database</h1>
+        <br/>
+        <div class="center">
+            <form class="form-inline" action="search" method="POST">
+                <input type="text" class="form-control" name="term" placeholder="Enter search term">
+                <button type="submit" class="btn btn-primary form-control">Submit</button>
+            </form>
+        </div>
+        <br/>
+        <div id="search-response"></div>
+    </div>
+    <br/><br/>
+    <footer>
+        <p class="text-center text-muted">
+            Created by Spencer Gang & John Liggett; Game Information from igdb.com
+        </p>
+    </footer>
+</body>
+
+</html>
+

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<!--=========================================
+* Ultimate Video Game Database
+* Final Project for CIS 408
+* Developed by Spencer Gang & John Liggett
+=============================================-->
+
+<html lang="en">
+
+<head>
+    <title>Ultimate Video Game Database</title>
+    <% include ../partials/head.ejs %>
+    <% include ../ejs/getYear.ejs %>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1 id="title">Ultimate Video Game Database</h1>
+        <br/>
+        <div class="center">
+            <form class="form-inline" action="search" method="POST">
+                <input type="text" class="form-control" name="term" placeholder="Enter search term" value="<%= term %>">
+                <button type="submit" class="btn btn-primary form-control">Submit</button>
+            </form>
+        </div>
+        <br/>
+        <div id="search-response" class="games table-responsive">
+            <table class="table table-hover">
+                <tbody>
+                    <% for(var i = 0; i < games.length; i++) { %>
+                        <tr class="game">
+                        <% var url = "https:"; if (games[i].cover == null) url += "//images.igdb.com/igdb/image/upload/t_thumb/nocover_qhhlj6.jpg"; %>
+                        <% if (games[i].imgur_cover != null) { url = games[i].imgur_cover } %>
+                        <% if (games[i].cover != null) url += games[i].cover.url; %>
+                        <% var slug_url = "game/"; if (games[i].slug == null) slug_url = ""; %>
+                        <% if (games[i].slug != null) slug_url += games[i].slug; %>
+                        <td class='col-sm-1 text-center'><a href="<%= slug_url %>"><img src="<%= url %>"/></a></td>
+                        <td class='col-sm-3'><a class="game-link" href="<%= slug_url %>"><%= games[i].name %></a>
+                            <% if (games[i].first_release_date != null) { %>
+                            (<%= getYear(games[i].first_release_date) %>)
+                            <% } %>
+                        </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <% if (sourceIGDB === false) { %>
+        <!--<script>
+            // alert("<%= sourceIGDB%>");
+        </script>-->
+        <br/>
+        <p class="center"><a id="search_igdb">Click here to search for more results.</a></p>
+        <script>
+            var term = "<%= term %>"
+        </script>
+        <script src="js/search.js"/></script>
+        <br/><br/>
+        <% } %>
+    </div>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+</body>
+
+</html>
+
